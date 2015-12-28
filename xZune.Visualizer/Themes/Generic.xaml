@@ -16,6 +16,7 @@
                         </Image>
 
                         <!--Debug Raw Data-->
+                        
                         <!--<Image Source="{TemplateBinding ImageSource}" VerticalAlignment="Bottom" Height="128" Stretch="Fill"/>-->
                         
                     </Border>

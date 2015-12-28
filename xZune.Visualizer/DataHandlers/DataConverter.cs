@@ -41,11 +41,11 @@ namespace xZune.Visualizer.DataHandlers
                     }
                     else if (i < data.Length / 4)
                     {
-                        data[i] = Convert(data[i])(40)(130);
+                        data[i] = Convert(data[i])(40)(150);
                     }
-                    else if (i < data.Length / 2)
+                    else if (i < data.Length * 2 / 3)
                     {
-                        data[i] = Convert(data[i])(22)(80);
+                        data[i] = Convert(data[i])(22)(83);
                     }
                     else
                     {

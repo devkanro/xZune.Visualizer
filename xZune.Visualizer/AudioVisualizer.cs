@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -107,14 +108,20 @@ namespace xZune.Visualizer
 
         private bool _drawing = false;
 
+        private ulong _lostFrameCount = 0;
+        private ulong _totalFrame = 0;
+
         /// <summary>
         /// Set input data.
         /// </summary>
         /// <param name="data"></param>
         public async void InputData(float[] data)
         {
+            _totalFrame++;
             if (_drawing)
             {
+                _lostFrameCount++;
+                Debug.WriteLine($"Frame lost {_lostFrameCount}/{_totalFrame}.");
                 return;
             }
 
@@ -173,8 +180,8 @@ namespace xZune.Visualizer
                 Parallel.For(0, OutputDataLenght/8, i =>
                 {
                     int index = i*8;
-                    byte pixelData = 0x0;
-                    byte[] caches = new byte[8];
+                    byte pixelData = 0xFF;
+                    byte[] caches = new byte[] {1,1,1,1,1,1,1,1};
 
                     float d0 = Data[MapIndex(index + 0)];
                     float d1 = Data[MapIndex(index + 1)];
@@ -187,61 +194,61 @@ namespace xZune.Visualizer
 
                     int pixelIndex = 0;
 
-                    for (int y = 0; y < 128; y++)
+                    for (int y = 127; y >= 0; y--)
                     {
                         pixelIndex = i + y * stride;
 
-                        if (imageBuffer[pixelIndex] == 0xFF && pixelData == 0xFF)
+                        if (imageBuffer[pixelIndex] == 0x00 && pixelData == 0x00)
                         {
                             break;
                         }
 
-                        if (caches[0] == 1 || 128 - d0 < y)
+                        if (caches[0] == 0 || 128 - d0 > y)
                         {
-                            caches[0] = 1;
-                            pixelData |= 0x1;
+                            caches[0] = 0;
+                            pixelData &= 0xFF - 0x1;
                         }
 
-                        if (caches[1] == 1 || 128 - d1 < y)
+                        if (caches[1] == 0 || 128 - d1 > y)
                         {
-                            caches[1] = 1;
-                            pixelData |= 0x2;
+                            caches[1] = 0;
+                            pixelData &= 0xFF - 0x2;
                         }
 
-                        if (caches[2] == 1 || 128 - d2 < y)
+                        if (caches[2] == 0 || 128 - d2 > y)
                         {
-                            caches[2] = 1;
-                            pixelData |= 0x4;
+                            caches[2] = 0;
+                            pixelData &= 0xFF - 0x4;
                         }
 
-                        if (caches[3] == 1 || 128 - d3 < y)
+                        if (caches[3] == 0 || 128 - d3 > y)
                         {
-                            caches[3] = 1;
-                            pixelData |= 0x8;
+                            caches[3] = 0;
+                            pixelData &= 0xFF - 0x8;
                         }
 
-                        if (caches[4] == 1 || 128 - d4 < y)
+                        if (caches[4] == 0 || 128 - d4 > y)
                         {
-                            caches[4] = 1;
-                            pixelData |= 0x10;
+                            caches[4] = 0;
+                            pixelData &= 0xFF - 0x10;
                         }
 
-                        if (caches[5] == 1 || 128 - d5 < y)
+                        if (caches[5] == 0 || 128 - d5 > y)
                         {
-                            caches[5] = 1;
-                            pixelData |= 0x20;
+                            caches[5] = 0;
+                            pixelData &= 0xFF - 0x20;
                         }
 
-                        if (caches[6] == 1 || 128 - d6 < y)
+                        if (caches[6] == 0 || 128 - d6 > y)
                         {
-                            caches[6] = 1;
-                            pixelData |= 0x40;
+                            caches[6] = 0;
+                            pixelData &= 0xFF - 0x40;
                         }
 
-                        if (caches[7] == 1 || 128 - d7 < y)
+                        if (caches[7] == 0 || 128 - d7 > y)
                         {
-                            caches[7] = 1;
-                            pixelData |= 0x80;
+                            caches[7] = 0;
+                            pixelData &= 0xFF - 0x80;
                         }
 
                         imageBuffer[pixelIndex] = pixelData;
