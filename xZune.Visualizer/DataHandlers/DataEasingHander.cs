@@ -28,16 +28,16 @@ namespace xZune.Visualizer.DataHandlers
 
         private float GetResult(int index, float data)
         {
-            return (float)(data * 0.5 +
-                           _cacheList[08][index] * 0.235 +
-                           _cacheList[07][index] * 0.11 +
-                           _cacheList[06][index] * 0.05 +
-                           _cacheList[05][index] * 0.03 +
-                           _cacheList[04][index] * 0.025 +
-                           _cacheList[03][index] * 0.02 +
-                           _cacheList[02][index] * 0.015 +
-                           _cacheList[01][index] * 0.01 +
-                           _cacheList[00][index] * 0.005);
+            return (float)(data * 0.3 +
+                               _cacheList[8][index] * 0.2 +
+                               _cacheList[7][index] * 0.15 +
+                               _cacheList[6][index] * 0.12 +
+                               _cacheList[5][index] * 0.08 +
+                               _cacheList[4][index] * 0.065 +
+                               _cacheList[3][index] * 0.035 +
+                               _cacheList[2][index] * 0.025 +
+                               _cacheList[1][index] * 0.015 +
+                               _cacheList[0][index] * 0.01);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace xZune.Visualizer.DataHandlers
                 }
 
                 var result = new float[data.Length];
-                
+
                 // Parallel convert data.
                 Parallel.For(0, data.Length, i =>
                 {
