@@ -8,7 +8,7 @@ Zune 风格的音频可视化控件。
 # Sample
 ![xZune](http://higan.me/xZune.png)
 
-## Zune Media Suit  
+## xZune Media Suit  
 
 **[xZune.Bass](https://github.com/higankanshi/xZune.Bass)**  
 xZune.Bass 是 [Bass](http://www.un4seen.com/bass.html) 库的 .NET 封装实现，用于多种格式的音频播放与解码。  
